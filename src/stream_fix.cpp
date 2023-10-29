@@ -17,7 +17,7 @@ bool FakeStream::is_closed() { return closed; }
 
 std::streambuf* FakeStream::rdbuf() { return nullptr; }
 
-std::streambuf* FakeStream::rdbuf(std::streambuf* __sb) { return nullptr; }
+std::streambuf* FakeStream::rdbuf(std::streambuf* buf) { return nullptr; }
 
 bool std::getline(FakeStream& is, std::string& str) {
     if (is.is_closed()) return false;

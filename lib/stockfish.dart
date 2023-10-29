@@ -165,7 +165,6 @@ void _isolateMain(SendPort mainPort) {
   mainPort.send(exitCode);
 
   developer.log('nativeMain returns $exitCode', name: 'Stockfish');
-  print("stoped");
 }
 
 void _isolateStdout(SendPort stdoutPort) {
