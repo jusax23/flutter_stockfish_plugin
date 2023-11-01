@@ -24,7 +24,7 @@ const char *QUITOK = "quitok\n";
 int main(int, char **);
 
 int stockfish_init() {
-    std::cout << "Init Stockfish: Nothing todo!";
+    //std::cout << "Init Stockfish: Nothing todo!";
     return 0;
 }
 
