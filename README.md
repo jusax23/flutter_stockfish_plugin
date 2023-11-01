@@ -1,8 +1,8 @@
 # flutter_stockfish_plugin
 
-A Flutter plugin for Stockfish Chess engine.
+A Flutter plugin for the Stockfish Chess engine.
 
-The current Version is based on Stockfish 16.
+The current version is based on Stockfish 16.
 
 ## Usage
 
@@ -28,9 +28,9 @@ stockfish.dispose();
 
 ## Goal of this fork of stockfish_chess_engine
 
-* Avoid limitation. This Version does not redirect stdout and stdin of the app for communication with stockfish.
-* stdin and stdout where replaced with a fakestream element.
-* Stockfish internel Logging might not work (could be fixed).
+* Avoid limitation. This version does not redirect stdout and stdin of the app for communication with stockfish.
+* stdin and stdout were replaced with a fakestream element.
+* Stockfish internal logging might not work (could be fixed).
 
 ## Credits
 * Based on and using source code from [stockfish_chess_engine](https://github.com/loloof64/StockfishChessEngineFlutter)
@@ -39,4 +39,4 @@ stockfish.dispose();
 
 Directory src/Stockfish contains the latest current release.
 The code is modified to use a different communication interface.
-Original License of [Stockfish](https://stockfishchess.org) can be found in their [Github](https://github.com/official-stockfish/Stockfish) Repository.
+The original license for [Stockfish](https://stockfishchess.org) can be found in their [GitHub](https://github.com/official-stockfish/Stockfish) repository.
