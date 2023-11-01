@@ -14,7 +14,7 @@ import 'stockfish_bindings_generated.dart';
 import 'stockfish_state.dart';
 
 const String _libName = 'flutter_stockfish_plugin';
-const String _releaseType = kDebugMode ? 'Debug' : 'Release';
+//const String _releaseType = kDebugMode ? 'Debug' : 'Release';
 
 /// The dynamic library in which the symbols for [StockfishChessEngineBindings] can be found.
 final DynamicLibrary _dylib = () {
