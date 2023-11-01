@@ -26,6 +26,8 @@ stockfishSubscription.cancel();
 stockfish.dispose();
 ```
 
+A complete Example can be found at [stockfish_chess_engine](https://github.com/loloof64/StockfishChessEngineFlutter).
+
 ## Goal of this fork of stockfish_chess_engine
 
 * Avoid limitation. This version does not redirect stdout and stdin of the app for communication with stockfish.

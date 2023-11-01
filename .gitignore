@@ -38,7 +38,6 @@ trash
 src/.depend
 
 # Built binary
-src/Stockfish/*
 src/-lstdc++.res
 
 # Neural network for the NNUE evaluation
