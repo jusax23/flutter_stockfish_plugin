@@ -9,6 +9,8 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Invoke the build for native code shared with the other target platforms.
 # This can be changed to accomodate different builds.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
 
 # List of absolute paths to libraries that should be bundled with the plugin.
