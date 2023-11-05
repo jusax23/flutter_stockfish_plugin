@@ -35,7 +35,11 @@ int stockfish_main() {
 
     fakeout << QUITOK << "\n";
 
+#if _WIN32
+    Sleep(100);
+#else
     usleep(100000);
+#endif
 
     fakeout.close();
     fakein.close();
@@ -52,7 +56,7 @@ ssize_t stockfish_stdin_write(char *data) {
 std::string data;
 char buffer[BUFFER_SIZE + 1];
 
-char *stockfish_stdout_read() {
+char* stockfish_stdout_read() {
     if (getline(fakeout, data)) {
         size_t len = data.length();
         size_t i;
@@ -62,5 +66,5 @@ char *stockfish_stdout_read() {
         buffer[i] = 0;
         return buffer;
     }
-    return NULL;
+    return nullptr;
 }

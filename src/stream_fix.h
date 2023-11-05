@@ -46,7 +46,7 @@ class FakeStream {
    private:
     bool closed = false;
     std::queue<std::string> string_queue;
-    std::string line;
+    //std::string line;
     std::mutex mutex_guard;
     std::condition_variable mutex_signal;
 };
