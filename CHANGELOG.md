@@ -1,3 +1,7 @@
+## 1.0.2
+Fixes for windows. This Version should run on windows.
+- Self implemented \_get\_pgmptr
+
 ## 1.0.1
 No major changes, just some metadata fixes.
 

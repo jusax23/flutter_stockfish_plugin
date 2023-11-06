@@ -1,6 +1,6 @@
 name: flutter_stockfish_plugin
 description: "A Stockfish Plugin for Flutter. Use Stockfish 16 directly in your flutter app."
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/jusax23/flutter_stockfish_plugin
 
 environment:
