@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.18)
 project(flutter_stockfish_plugin VERSION 0.0.1 LANGUAGES CXX)
 file(GLOB_RECURSE cppPaths "Stockfish/src/*.cpp")
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -flto -DNDEBUG -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O3 -flto -DNDEBUG -fPIC")
 set(NNUE_NAME nn-5af11540bbfe.nnue)
 
 add_library(flutter_stockfish_plugin SHARED

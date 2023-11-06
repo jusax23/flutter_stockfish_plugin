@@ -19,8 +19,9 @@ bool fake_get_pgmptr(char** ptr) {
         WideCharToMultiByte(CP_UTF8, 0, buffer, -1, narrowBuffer, MAX_PATH,
                             NULL, NULL);
         *ptr = narrowBuffer;
+        return false;
     }
-    return false;
+    return true;
 }
 #endif
 #endif
