@@ -12,6 +12,9 @@ find ./Stockfish/ -type f -exec sed -i \
     -e 's/std::cin/fakein/g' \
     -e 's/std::endl/fakeendl/g' \
     -e 's/getline(cin, cmd)/getline(fakein, cmd)/g' \
+    -e 's/cin.rdbuf/fakein.rdbuf/g' \
+    -e 's/cout.rdbuf/fakeout.rdbuf/g' \
+    -e 's/_get_pgmptr/fake_get_pgmptr/g' \
     {} +
 
 nnue_name=$(grep EvalFileDefaultName Stockfish/src/evaluate.h \

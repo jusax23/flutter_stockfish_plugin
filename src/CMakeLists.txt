@@ -6,12 +6,13 @@ cmake_minimum_required(VERSION 3.18)
 project(flutter_stockfish_plugin VERSION 0.0.1 LANGUAGES CXX)
 file(GLOB_RECURSE cppPaths "Stockfish/src/*.cpp")
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -flto")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -flto -DNDEBUG -fPIC")
 set(NNUE_NAME nn-5af11540bbfe.nnue)
 
 add_library(flutter_stockfish_plugin SHARED
   "stockfish.cpp"
   "stream_fix.cpp"
+  "small_fixes.cpp"
   ${cppPaths}
 )
 
@@ -21,9 +22,9 @@ set_target_properties(flutter_stockfish_plugin PROPERTIES
 )
 
 if(MSVC)
-    add_definitions(/FI"stream_fix.h")
+    add_definitions(/FI"fixes.h")
 else()
-    add_definitions(-include stream_fix.h)
+    add_definitions(-include fixes.h)
 endif()
 
 target_compile_definitions(flutter_stockfish_plugin PUBLIC DART_SHARED_LIB)

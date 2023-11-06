@@ -3,9 +3,6 @@
 #ifdef _WIN32
 #include <fcntl.h>
 #include <io.h>
-#define STDIN_FILENO 0
-#define STDOUT_FILENO 1
-#define STDERR_FILENO 2
 #ifdef _WIN64
 #define ssize_t __int64
 #else
@@ -18,6 +15,8 @@
 #define BUFFER_SIZE 1024
 
 #include "stockfish.h"
+
+#include "fixes.h"
 
 const char *QUITOK = "quitok\n";
 

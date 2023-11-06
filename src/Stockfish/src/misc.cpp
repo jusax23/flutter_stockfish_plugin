@@ -75,8 +75,8 @@ namespace {
 /// Version number or dev.
 constexpr string_view version = "16";
 
-/// Our fancy logging facility. The trick here is to replace cin.rdbuf() and
-/// cout.rdbuf() with two Tie objects that tie cin and cout to a file stream. We
+/// Our fancy logging facility. The trick here is to replace fakein.rdbuf() and
+/// fakeout.rdbuf() with two Tie objects that tie cin and cout to a file stream. We
 /// can toggle the logging of fakeout and std:cin at runtime whilst preserving
 /// usual I/O functionality, all without changing a single line of code!
 /// Idea from http://groups.google.com/group/comp.lang.c++/msg/1d941c0f26ea0d81
@@ -105,7 +105,7 @@ struct Tie: public streambuf { // MSVC requires split streambuf for cin and cout
 
 class Logger {
 
-  Logger() : in(cin.rdbuf(), file.rdbuf()), out(cout.rdbuf(), file.rdbuf()) {}
+  Logger() : in(fakein.rdbuf(), file.rdbuf()), out(fakeout.rdbuf(), file.rdbuf()) {}
  ~Logger() { start(""); }
 
   ofstream file;
@@ -118,8 +118,8 @@ public:
 
     if (l.file.is_open())
     {
-        cout.rdbuf(l.out.buf);
-        cin.rdbuf(l.in.buf);
+        fakeout.rdbuf(l.out.buf);
+        fakein.rdbuf(l.in.buf);
         l.file.close();
     }
 
@@ -133,8 +133,8 @@ public:
             exit(EXIT_FAILURE);
         }
 
-        cin.rdbuf(&l.in);
-        cout.rdbuf(&l.out);
+        fakein.rdbuf(&l.in);
+        fakeout.rdbuf(&l.out);
     }
   }
 };
@@ -751,10 +751,10 @@ void init([[maybe_unused]] int argc, char* argv[]) {
 #ifdef _WIN32
     pathSeparator = "\\";
   #ifdef _MSC_VER
-    // Under windows argv[0] may not have the extension. Also _get_pgmptr() had
+    // Under windows argv[0] may not have the extension. Also fake_get_pgmptr() had
     // issues in some windows 10 versions, so check returned values carefully.
     char* pgmptr = nullptr;
-    if (!_get_pgmptr(&pgmptr) && pgmptr != nullptr && *pgmptr)
+    if (!fake_get_pgmptr(&pgmptr) && pgmptr != nullptr && *pgmptr)
         argv0 = pgmptr;
   #endif
 #else
