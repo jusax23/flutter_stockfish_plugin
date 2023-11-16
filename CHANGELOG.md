@@ -1,3 +1,7 @@
+## 1.0.3
+Perfomance Flags for Windows and Linux.
+- Activating: sse, sse2, sse3, sse4.1
+
 ## 1.0.2
 Fixes for windows. This Version should run on windows.
 - Self implemented \_get\_pgmptr
