@@ -8,9 +8,18 @@ bool FakeStream::try_get_line(std::string& val) {
     return true;
 }
 
+void FakeStream::open() {
+    std::lock_guard<std::mutex> lock(mutex_guard);
+    closed = false;
+    mutex_signal.notify_one();
+}
+
 void FakeStream::close() {
     std::lock_guard<std::mutex> lock(mutex_guard);
     closed = true;
+    while (!string_queue.empty()) {
+        string_queue.pop();
+    }
     mutex_signal.notify_one();
 }
 bool FakeStream::is_closed() { return closed; }

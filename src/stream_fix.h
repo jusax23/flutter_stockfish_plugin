@@ -37,6 +37,7 @@ class FakeStream {
 
     bool try_get_line(std::string& val);
 
+    void open();
     void close();
     bool is_closed();
 

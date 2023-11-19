@@ -23,7 +23,8 @@ const char *QUITOK = "quitok\n";
 int main(int, char **);
 
 int stockfish_init() {
-    //std::cout << "Init Stockfish: Nothing todo!";
+    fakein.open();
+    fakeout.open();
     return 0;
 }
 

@@ -27,14 +27,6 @@ final DynamicLibrary _dylib = () {
   if (Platform.isWindows) {
     return DynamicLibrary.open('$_libName.dll');
   }
-  /*if (Platform.isLinux) {
-    return DynamicLibrary.open(
-        '${File(Platform.resolvedExecutable).parent.parent.path}/plugins/flutter_stockfish_plugin/shared/lib$_libName.so');
-  }
-  if (Platform.isWindows) {
-    return DynamicLibrary.open(
-        '${File(Platform.resolvedExecutable).parent.parent.parent.path}/plugins/flutter_stockfish_plugin/shared/$_releaseType/$_libName.dll');
-  }*/
   throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
 }();
 
