@@ -1,3 +1,7 @@
+## 1.0.4
+Restarting bug fixed.
+- Added the ability to restart stockfish.
+
 ## 1.0.3
 Perfomance Flags for Windows and Linux.
 - Activating: sse, sse2, sse3, sse4.1
