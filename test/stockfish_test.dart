@@ -7,9 +7,10 @@ import 'package:flutter_test/flutter_test.dart';
 ///  To run the test, you have to
 ///    1. run the example (example/lib/main.dart) in windows,
 ///       so everything gets build
-///    2. copy flutter_stockfish_plugin.dll to example-directory manually
+///    2. copy flutter_stockfish_plugin.dll to root-directory
+///       (directly to flutter_stockfish_plugin) manually
 void main() {
-  test('Counter value should be incremented', () async {
+  test('Start Stockfish and uci init', () async {
     final fish1 = Stockfish();
 
     List<String> received = [];
