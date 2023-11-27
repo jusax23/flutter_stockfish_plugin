@@ -12,7 +12,7 @@
 #include <unistd.h>
 #endif
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 4096
 
 #include "stockfish.h"
 
