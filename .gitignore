@@ -45,3 +45,4 @@ src/-lstdc++.res
 **/*.nnue
 
 flags.txt
+/flutter_stockfish_plugin.dll

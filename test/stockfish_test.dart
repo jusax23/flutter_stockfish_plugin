@@ -5,10 +5,11 @@ import 'package:flutter_stockfish_plugin/stockfish.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 ///  To run the test, you have to
-///    1. run the example (example/lib/main.dart) in windows,
+///    1. run the example (example/lib/main.dart) on desktop (linux/windows),
 ///       so everything gets build
 ///    2. copy flutter_stockfish_plugin.dll to root-directory
-///       (directly to flutter_stockfish_plugin) manually
+///       (from example\build\windows\x64\plugins\flutter_stockfish_plugin\shared\Debug
+///        directly to flutter_stockfish_plugin) manually
 void main() {
   test('Start Stockfish and uci init', () async {
     final fish1 = Stockfish();

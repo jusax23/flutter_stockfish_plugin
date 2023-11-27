@@ -1,7 +1,5 @@
 // Using code from https://github.com/ArjanAswal/Stockfish/blob/master/lib/src/stockfish.dart
 
-/// https://pub.dev/packages/thread/example
-
 import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
@@ -18,17 +16,29 @@ import 'stockfish_state.dart';
 const String _libName = 'flutter_stockfish_plugin';
 //const String _releaseType = kDebugMode ? 'Debug' : 'Release';
 
+/// The dynamic library in which the symbols for [StockfishChessEngineBindings] can be found.
+final DynamicLibrary _dylib = () {
+  if (Platform.isMacOS || Platform.isIOS) {
+    return DynamicLibrary.open('$_libName.framework/$_libName');
+  }
+  if (Platform.isAndroid || Platform.isLinux) {
+    return DynamicLibrary.open('lib$_libName.so');
+  }
+  if (Platform.isWindows) {
+    return DynamicLibrary.open('$_libName.dll');
+  }
+  throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
+}();
+
+/// The bindings to the native functions in [_dylib].
+final StockfishChessEngineBindings _bindings =
+    StockfishChessEngineBindings(_dylib);
+
 /// A wrapper for C++ engine.
 class Stockfish {
-  /// The dynamic library in which the symbols for [StockfishChessEngineBindings] can be found.
-  late final DynamicLibrary _dylib;
-
-  /// The bindings to the native functions in [_dylib].
-  late final StockfishChessEngineBindings _bindings;
-
   final Completer<Stockfish>? completer;
 
-  final _StockfishState _state = _StockfishState();
+  final _state = _StockfishState();
   final _stdoutController = StreamController<String>.broadcast();
   final _mainPort = ReceivePort();
   final _stdoutPort = ReceivePort();
@@ -37,22 +47,6 @@ class Stockfish {
   late StreamSubscription _stdoutSubscription;
 
   Stockfish._({this.completer}) {
-    print("1");
-    _dylib = () {
-      if (Platform.isMacOS || Platform.isIOS) {
-        return DynamicLibrary.open('$_libName.framework/$_libName');
-      }
-      if (Platform.isAndroid || Platform.isLinux) {
-        return DynamicLibrary.open('lib$_libName.so');
-      }
-      if (Platform.isWindows) {
-        return DynamicLibrary.open('$_libName.dll');
-      }
-      throw UnsupportedError('Unknown platform: ${Platform.operatingSystem}');
-    }();
-    _bindings = StockfishChessEngineBindings(_dylib);
-    print("2");
-
     _mainSubscription =
         _mainPort.listen((message) => _cleanUp(message is int ? message : 1));
     _stdoutSubscription = _stdoutPort.listen((message) {
@@ -62,12 +56,8 @@ class Stockfish {
         developer.log('The stdout isolate sent $message', name: 'Stockfish');
       }
     });
-    print("3");
-    compute(_spawnIsolates,
-        [_bindings, _mainPort.sendPort, _stdoutPort.sendPort]).then(
+    compute(_spawnIsolates, [_mainPort.sendPort, _stdoutPort.sendPort]).then(
       (success) {
-        print("4");
-
         final state = success ? StockfishState.ready : StockfishState.error;
         _state._setValue(state);
         if (state == StockfishState.ready) {
@@ -75,9 +65,6 @@ class Stockfish {
         }
       },
       onError: (error) {
-        print("5");
-        print(error);
-
         developer.log('The init isolate encountered an error $error',
             name: 'Stockfish');
         _cleanUp(1);
@@ -92,13 +79,12 @@ class Stockfish {
   /// This may throws a [StateError] if an active instance is being used.
   /// Owner must [dispose] it before a new instance can be created.
   factory Stockfish() {
-    /*if (_instance != null) {
+    if (_instance != null) {
       throw StateError('Multiple instances are not supported, yet.');
     }
 
     _instance = Stockfish._();
-    return _instance!;*/
-    return Stockfish._();
+    return _instance!;
   }
 
   /// The current state of the underlying C++ engine.
@@ -169,27 +155,18 @@ class _StockfishState extends ChangeNotifier
   }
 }
 
-void _isolateMain(List<dynamic> args) {
-  StockfishChessEngineBindings bindings =
-      args[0] as StockfishChessEngineBindings;
-  SendPort mainPort = args[1] as SendPort;
-
-  print("****************");
-  final exitCode = bindings.stockfish_main();
+void _isolateMain(SendPort mainPort) {
+  final exitCode = _bindings.stockfish_main();
   mainPort.send(exitCode);
 
   developer.log('nativeMain returns $exitCode', name: 'Stockfish');
 }
 
-void _isolateStdout(List args) {
-  StockfishChessEngineBindings bindings =
-      args[0] as StockfishChessEngineBindings;
-  SendPort stdoutPort = args[1] as SendPort;
-
+void _isolateStdout(SendPort stdoutPort) {
   String previous = '';
 
   while (true) {
-    final pointer = bindings.stockfish_stdout_read();
+    final pointer = _bindings.stockfish_stdout_read();
 
     if (pointer.address == 0) {
       developer.log('nativeStdoutRead returns NULL', name: 'Stockfish');
@@ -215,28 +192,22 @@ void _isolateStdout(List args) {
   }
 }
 
-Future<bool> _spawnIsolates(List<dynamic> mainAndStdout) async {
-  print("6");
-  StockfishChessEngineBindings bindings =
-      mainAndStdout[0] as StockfishChessEngineBindings;
-  final initResult = bindings.stockfish_init();
+Future<bool> _spawnIsolates(List<SendPort> mainAndStdout) async {
+  final initResult = _bindings.stockfish_init();
   if (initResult != 0) {
     developer.log('initResult=$initResult', name: 'Stockfish');
     return false;
   }
 
   try {
-    print("7");
-    await Isolate.spawn(
-        _isolateStdout, [bindings, mainAndStdout[2] as SendPort]);
+    await Isolate.spawn(_isolateStdout, mainAndStdout[1]);
   } catch (error) {
     developer.log('Failed to spawn stdout isolate: $error', name: 'Stockfish');
     return false;
   }
 
   try {
-    print("8");
-    await Isolate.spawn(_isolateMain, [bindings, mainAndStdout[1] as SendPort]);
+    await Isolate.spawn(_isolateMain, mainAndStdout[0]);
   } catch (error) {
     developer.log('Failed to spawn main isolate: $error', name: 'Stockfish');
     return false;
