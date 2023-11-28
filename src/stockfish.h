@@ -45,4 +45,4 @@ FFI_PLUGIN_EXPORT ssize_t stockfish_stdin_write(char *data);
 #ifndef _ffigen
 extern "C"
 #endif
-FFI_PLUGIN_EXPORT char * stockfish_stdout_read();
+FFI_PLUGIN_EXPORT const char * stockfish_stdout_read();

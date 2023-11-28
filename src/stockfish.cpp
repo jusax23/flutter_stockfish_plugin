@@ -12,11 +12,8 @@
 #include <unistd.h>
 #endif
 
-#define BUFFER_SIZE 1024
-
-#include "stockfish.h"
-
 #include "fixes.h"
+#include "stockfish.h"
 
 const char *QUITOK = "quitok\n";
 
@@ -54,17 +51,10 @@ ssize_t stockfish_stdin_write(char *data) {
 }
 
 std::string data;
-char buffer[BUFFER_SIZE + 1];
 
-char* stockfish_stdout_read() {
+const char *stockfish_stdout_read() {
     if (getline(fakeout, data)) {
-        size_t len = data.length();
-        size_t i;
-        for (i = 0; i < len && i < BUFFER_SIZE; i++) {
-            buffer[i] = data[i];
-        }
-        buffer[i] = 0;
-        return buffer;
+        return data.c_str();
     }
     return nullptr;
 }
