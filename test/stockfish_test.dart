@@ -5,7 +5,7 @@ import 'package:flutter_stockfish_plugin/stockfish.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 ///  To run the test, you have to
-///    1. run the example (example/lib/main.dart) in windows,
+///    1. run the example (example/lib/main.dart) on desktop (linux/windows),
 ///       so everything gets build
 ///    2. copy flutter_stockfish_plugin.dll to root-directory
 ///       (directly to flutter_stockfish_plugin) manually
