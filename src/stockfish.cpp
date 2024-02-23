@@ -15,9 +15,11 @@
 #include "fixes.h"
 #include "stockfish.h"
 
-const char *QUITOK = "quitok\n";
+const char* QUITOK = "quitok\n";
 
-int main(int, char **);
+void runMain() {}
+
+int main(int, char**);
 
 int stockfish_init() {
     fakein.open();
@@ -27,8 +29,11 @@ int stockfish_init() {
 
 int stockfish_main() {
     int argc = 1;
-    char *argv[] = {(char *)""};
+    char* empty = (char*)malloc(0);
+    *empty = 0;
+    char* argv[] = {empty};
     int exitCode = main(argc, argv);
+    free(empty);
 
     fakeout << QUITOK << "\n";
 
@@ -44,7 +49,7 @@ int stockfish_main() {
     return exitCode;
 }
 
-ssize_t stockfish_stdin_write(char *data) {
+ssize_t stockfish_stdin_write(char* data) {
     std::string val(data);
     fakein << val << fakeendl;
     return val.length();
@@ -52,9 +57,15 @@ ssize_t stockfish_stdin_write(char *data) {
 
 std::string data;
 
-const char *stockfish_stdout_read() {
-    if (getline(fakeout, data)) {
-        return data.c_str();
+const char* stockfish_stdout_read(int trygetline) {
+    if (trygetline) {
+        if (fakeout.try_get_line(data)) {
+            return data.c_str();
+        }
+    } else {
+        if (getline(fakeout, data)) {
+            return data.c_str();
+        }
     }
     return nullptr;
 }

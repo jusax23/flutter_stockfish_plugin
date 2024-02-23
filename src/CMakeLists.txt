@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 if(MSVC)
   set(COMMON_FLAGS "/std:c++17 /LTCG")
 
-  set(SIMD_FLAGS "/arch:AVX2 /arch:SSE /DUSE_POPCNT /DUSE_SSE41 /DUSE_SSSE3 /DUSE_SSE2")
+  set(SIMD_FLAGS "/arch:AVX2 /DUSE_POPCNT /arch:SSE /DUSE_SSE2 /DUSE_SSSE3 /DUSE_SSE41")
 
   if (CMAKE_SIZEOF_VOID_P EQUAL 8)
     message(STATUS "Adding x86_64 specific flags")
@@ -25,9 +25,9 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /DNDEBUG")
 
 else()
-  set(COMMON_FLAGS "-Wall -Wcast-qual -fno-exceptions -std=c++17 -pedantic -Wextra -Wshadow -Wmissing-declarations -flto -DUSE_PTHREADS") 
+  set(COMMON_FLAGS "-Wall -Wcast-qual -Wno-main -fno-exceptions -std=c++17 -pedantic -Wextra -Wshadow -Wmissing-declarations -flto -DUSE_PTHREADS") 
 
-  set(SIMD_FLAGS "-msse -msse3 -mpopcnt -DUSE_POPCNT -DUSE_SSE41 -msse4.1 -DUSE_SSSE3 -mssse3 -DUSE_SSE2 -msse2")
+  set(SIMD_FLAGS "-mpopcnt -DUSE_POPCNT -msse -DUSE_SSE2 -msse2 -msse3 -DUSE_SSSE3 -mssse3 -DUSE_SSE41 -msse4.1 -DUSE_SSE42 -msse4.2")
 
   if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     message(STATUS "Adding x86_64 specific flags")

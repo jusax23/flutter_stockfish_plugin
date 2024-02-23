@@ -1,10 +1,10 @@
 # Run with `flutter pub run ffigen --config ffigen_linux.yaml`.
-name: StockfishChessEngineBindings
+name: StockfishChessEngineCBindings
 description: |
   Bindings for `src/stockfish.h`.
 
   Regenerate bindings with `dart run ffigen --config ffigen.yaml`.
-output: "lib/stockfish_bindings_generated.dart"
+output: "lib/stockfish_c_bindings_generated.dart"
 headers:
   entry-points:
     - "src/stockfish.h"
