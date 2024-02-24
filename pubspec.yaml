@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
-  ffigen: ^9.0.1
+  ffigen: ^11.0.0
   test: ^1.24.3
 
 # For information on the generic Dart part of this file, see the
@@ -43,8 +43,10 @@ flutter:
         ffiPlugin: true
       windows:
         ffiPlugin: true
+      web:
     # -------------------
-
+  assets:
+    - web/test.js
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
