@@ -45,12 +45,12 @@ flutter:
         ffiPlugin: true
       web:
     # -------------------
-  assets:
-    - web/js_bindings.js
-    - web/stockfish_data.bin
-    - web/flutter_stockfish_plugin.js
-    - web/flutter_stockfish_plugin.wasm
-    - web/flutter_stockfish_plugin.worker.js
+  #assets:
+  #  - web/js_bindings.js
+  #  - web/stockfish_data.bin
+  #  - web/flutter_stockfish_plugin.js
+  #  - web/flutter_stockfish_plugin.wasm
+  #  - web/flutter_stockfish_plugin.worker.js
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

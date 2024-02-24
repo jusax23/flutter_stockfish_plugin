@@ -29,7 +29,7 @@ stockfish.dispose();
 A complete Example can be found at [stockfish_chess_engine](https://github.com/loloof64/StockfishChessEngineFlutter).
 
 ## Web support
-Web support is currently experimental. It uses a version of stockfish compiled with [emscripten](https://emscripten.org/).
+Web support is currently experimental and currently requires manuly adding assets. It uses a version of stockfish compiled with [emscripten](https://emscripten.org/).
 
 In order to make multithreading available, the site must run in a secure environment. 
 The following headers must be set for this:
