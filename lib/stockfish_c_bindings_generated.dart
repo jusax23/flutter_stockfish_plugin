@@ -43,6 +43,25 @@ class StockfishChessEngineCBindings {
       _lookup<ffi.NativeFunction<ffi.Int Function()>>('stockfish_main');
   late final _stockfish_main = _stockfish_mainPtr.asFunction<int Function()>();
 
+  void stockfish_start_main() {
+    return _stockfish_start_main();
+  }
+
+  late final _stockfish_start_mainPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('stockfish_start_main');
+  late final _stockfish_start_main =
+      _stockfish_start_mainPtr.asFunction<void Function()>();
+
+  int stockfish_last_main_state() {
+    return _stockfish_last_main_state();
+  }
+
+  late final _stockfish_last_main_statePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>(
+          'stockfish_last_main_state');
+  late final _stockfish_last_main_state =
+      _stockfish_last_main_statePtr.asFunction<int Function()>();
+
   int stockfish_stdin_write(
     ffi.Pointer<ffi.Char> data,
   ) {
@@ -74,3 +93,4 @@ class StockfishChessEngineCBindings {
 
 typedef ssize_t = __ssize_t;
 typedef __ssize_t = ffi.Long;
+typedef Dart__ssize_t = int;

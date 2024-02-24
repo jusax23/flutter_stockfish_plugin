@@ -1,19 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_stockfish_plugin/stockfish_bindings.dart';
 import 'package:flutter_stockfish_plugin/stockfish_native_bindings.dart'
     if (dart.library.html) 'package:flutter_stockfish_plugin/stockfish_web_bindings.dart';
 import 'package:flutter_stockfish_plugin/stockfish_state.dart';
 
-final StockfishChessEngineAbstractBindings _bindings =
-    StockfishChessEngineBindings();
-
 class Stockfish {
   final _state = StockfishStateClass();
+  final StockfishChessEngineAbstractBindings _bindings =
+      StockfishChessEngineBindings();
 
-  Stockfish._() {
+  Stockfish._({Completer<Stockfish>? completer}) {
     _state.setValue(StockfishState.starting);
     _bindings.stockfishMain(() {
       _state.setValue(StockfishState.ready);
+      completer?.complete(this);
     }).then((exitCode) {
       _state.setValue(
           exitCode == 0 ? StockfishState.disposed : StockfishState.error);
@@ -21,12 +23,13 @@ class Stockfish {
     }, onError: (error) {
       _state.setValue(StockfishState.error);
       _instance = null;
+      completer?.completeError(error);
     });
   }
 
   static Stockfish? _instance;
 
-  /// Creates a C++ engine.
+  /// Creates the stockfish engine.
   ///
   /// This may throws a [StateError] if an active instance is being used.
   /// Owner must [dispose] it before a new instance can be created.
@@ -38,7 +41,7 @@ class Stockfish {
     return _instance!;
   }
 
-  /// The current state of the underlying C++ engine.
+  /// The current state of the underlying stockfish engine.
   ValueListenable<StockfishState> get state => _state;
 
   /// The standard output stream.
@@ -53,23 +56,25 @@ class Stockfish {
     _bindings.write(line);
   }
 
-  /// Stops the C++ engine.
+  /// Stops the stockfish engine.
   void dispose() {
     final stateValue = state.value;
     if (stateValue == StockfishState.ready) {
       stdin = 'quit';
     }
   }
+}
 
-  void _cleanUp(int exitCode) {
-    /*_stdoutController.close();
-
-    _mainSubscription.cancel();
-    _stdoutSubscription.cancel();
-
-    _state._setValue(
-        exitCode == 0 ? StockfishState.disposed : StockfishState.error);
-
-    _instance = null;*/
+/// Creates the stockfish engine asynchronously.
+///
+/// This method is different from the factory method [Stockfish] that
+/// it will wait for the engine to be ready before returning the instance.
+Future<Stockfish> stockfishAsync() {
+  if (Stockfish._instance != null) {
+    return Future.error(StateError('Only one instance can be used at a time'));
   }
+
+  final completer = Completer<Stockfish>();
+  Stockfish._instance = Stockfish._(completer: completer);
+  return completer.future;
 }

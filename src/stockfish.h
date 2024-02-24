@@ -38,6 +38,20 @@ extern "C"
     FFI_PLUGIN_EXPORT int
     stockfish_main();
 
+// Stockfish start main loop.
+#ifndef _ffigen
+extern "C"
+#endif
+    FFI_PLUGIN_EXPORT void
+    stockfish_start_main();
+
+// Stockfish last main loop state.
+#ifndef _ffigen
+extern "C"
+#endif
+    FFI_PLUGIN_EXPORT int
+    stockfish_last_main_state();
+
 // Writing to Stockfish STDIN.
 #ifndef _ffigen
 extern "C"

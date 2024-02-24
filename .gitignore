@@ -45,3 +45,8 @@ src/-lstdc++.res
 **/*.nnue
 
 flags.txt
+
+CMakeFiles
+cmake_install.cmake
+CMakeCache.txt
+Makefile

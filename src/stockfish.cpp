@@ -14,6 +14,7 @@
 
 #include "fixes.h"
 #include "stockfish.h"
+#include <thread>
 
 const char* QUITOK = "quitok\n";
 
@@ -27,7 +28,10 @@ int stockfish_init() {
     return 0;
 }
 
+int _last_main_state = -2;
+
 int stockfish_main() {
+    _last_main_state = -1;
     int argc = 1;
     char* empty = (char*)malloc(0);
     *empty = 0;
@@ -46,7 +50,17 @@ int stockfish_main() {
     fakeout.close();
     fakein.close();
 
+    _last_main_state = exitCode;
     return exitCode;
+}
+
+void stockfish_start_main(){
+    std::thread t(stockfish_main);
+    t.detach();
+}
+
+int stockfish_last_main_state(){
+    return _last_main_state;
 }
 
 ssize_t stockfish_stdin_write(char* data) {

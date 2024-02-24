@@ -1,25 +1,78 @@
-import 'dart:async';
+// ignore_for_file: avoid_web_libraries_in_flutter
 
+import 'dart:async';
+import 'dart:js' as js;
+import 'dart:html' as html;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_stockfish_plugin/stockfish_bindings.dart';
 
 class StockfishChessEngineBindings
     extends StockfishChessEngineAbstractBindings {
-  @override
-  void cleanUp(int exitCode) {
-    // TODO: implement cleanUp
+  Future<void>? loadJs;
+  StockfishChessEngineBindings() {
+    loadJs = loadJsFileIfNeeded();
   }
 
   @override
-  Future<int> stockfishMain(Function active) {
-    // TODO: implement stockfishMain
+  void cleanUp(int exitCode) {
+    stdoutController.close();
+    js.context.callMethod("stop_listening", []);
+  }
+
+  @override
+  Future<int> stockfishMain(Function active) async {
+    if (loadJs != null) {
+      await loadJs;
+      loadJs = null;
+    }
     final completer = Completer<int>();
-    //completer.complete(0);
+    js.context.callMethod("start_listening", [
+      (line) => stdoutController.sink.add(line),
+      (state) {
+        cleanUp(state is int ? state : 1);
+        completer.complete(state is int ? state : 1);
+      }
+    ]);
     active();
     return completer.future;
   }
 
   @override
   void write(String line) {
-    // TODO: implement write
+    js.context.callMethod("write", [line]);
   }
+}
+
+bool _jsloaded = false;
+
+Future<void> loadJsFileIfNeeded() async {
+  if (kIsWeb && !_jsloaded) {
+    final stockfishScript = html.document.createElement("script");
+    stockfishScript.setAttribute("src",
+        "assets/packages/flutter_stockfish_plugin/web/flutter_stockfish_plugin.js");
+    html.document.head?.append(stockfishScript);
+
+    await stockfishScript.onLoad.first;
+
+    final jsBindingsScript = html.document.createElement("script");
+    jsBindingsScript.setAttribute(
+        "src", "assets/packages/flutter_stockfish_plugin/web/js_bindings.js");
+    html.document.head?.append(jsBindingsScript);
+
+    await jsBindingsScript.onLoad.first;
+
+    await _stockfishWaitReady();
+
+    //js.context.callMethod("t_cb", [test]);
+    _jsloaded = true;
+  }
+}
+
+Future<dynamic> _stockfishWaitReady() {
+  final completer = Completer<dynamic>();
+  js.context.callMethod('wait_ready', [
+    completer.complete,
+  ]);
+  return completer.future;
 }

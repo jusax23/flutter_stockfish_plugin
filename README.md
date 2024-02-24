@@ -28,6 +28,21 @@ stockfish.dispose();
 
 A complete Example can be found at [stockfish_chess_engine](https://github.com/loloof64/StockfishChessEngineFlutter).
 
+## Web support
+Web support is currently experimental. It uses a version of stockfish compiled with [emscripten](https://emscripten.org/).
+
+In order to make multithreading available, the site must run in a secure environment. 
+The following headers must be set for this:
+
+- `Cross-Origin-Embedder-Policy: require-corp`
+- `Cross-Origin-Opener-Policy: same-origin`
+
+Problems:
+- The current version includes the `.js`, `.wasm` and neuralnetwork data as assets. 
+These files are bundled with every build on every platform, even if they are not needed. 
+This approach wasts about 41MB, if not striped out by hand.
+
+
 ## Goal of this fork of stockfish_chess_engine
 
 * Avoid limitation. This version does not redirect stdout and stdin of the app for communication with stockfish.

@@ -64,6 +64,7 @@ class StockfishChessEngineBindings
       onError: (error) {
         developer.log('The init isolate encountered an error $error',
             name: 'Stockfish');
+        completer.completeError(error);
         cleanUp(1);
       },
     );
