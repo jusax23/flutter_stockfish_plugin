@@ -58,4 +58,4 @@ Directory src/Stockfish contains the latest current release.
 The code is modified to use a different communication interface.
 The original license for [Stockfish](https://stockfishchess.org) can be found in their [GitHub](https://github.com/official-stockfish/Stockfish) repository.
 
-Directory web/build and/or src/ may contains code compiled from [emscripten](https://emscripten.org/) or code that will be compiled with emscripten. Emscripten is licensed among others under the MIT License. [License Page](https://emscripten.org/docs/introducing_emscripten/emscripten_license.html)
+Directory web/ may contains code compiled from [emscripten](https://emscripten.org/). Emscripten is licensed among others under the MIT License. [License Page](https://emscripten.org/docs/introducing_emscripten/emscripten_license.html)
