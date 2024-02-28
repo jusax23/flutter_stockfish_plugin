@@ -62,11 +62,9 @@ Future<void> loadJsFileIfNeeded() async {
 
     await jsBindingsScript.onLoad.first;
 
-    await _stockfishWaitReady();
-
-    //js.context.callMethod("t_cb", [test]);
     _jsloaded = true;
   }
+  await _stockfishWaitReady();
 }
 
 Future<dynamic> _stockfishWaitReady() {
