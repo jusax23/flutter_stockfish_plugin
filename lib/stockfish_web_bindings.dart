@@ -7,6 +7,8 @@ import 'dart:html' as html;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_stockfish_plugin/stockfish_bindings.dart';
 
+const jsPath = "stockfish/";
+
 class StockfishChessEngineBindings
     extends StockfishChessEngineAbstractBindings {
   Future<void>? loadJs;
@@ -49,15 +51,13 @@ bool _jsloaded = false;
 Future<void> loadJsFileIfNeeded() async {
   if (kIsWeb && !_jsloaded) {
     final stockfishScript = html.document.createElement("script");
-    stockfishScript.setAttribute("src",
-        "assets/packages/flutter_stockfish_plugin/web/flutter_stockfish_plugin.js");
+    stockfishScript.setAttribute("src", "${jsPath}flutter_stockfish_plugin.js");
     html.document.head?.append(stockfishScript);
 
     await stockfishScript.onLoad.first;
 
     final jsBindingsScript = html.document.createElement("script");
-    jsBindingsScript.setAttribute(
-        "src", "assets/packages/flutter_stockfish_plugin/web/js_bindings.js");
+    jsBindingsScript.setAttribute("src", "${jsPath}js_bindings.js");
     html.document.head?.append(jsBindingsScript);
 
     await jsBindingsScript.onLoad.first;

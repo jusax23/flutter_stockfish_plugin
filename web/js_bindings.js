@@ -1,4 +1,5 @@
 const nnue_name = "nn-5af11540bbfe.nnue";
+const path = "stockfish/";
 
 let s_read, s_write, s_main, s_init, s_state;
 
@@ -6,7 +7,7 @@ let ready = false;
 let ready_cb = null;
 
 Module.onRuntimeInitialized = async function () {
-    let data = await fetch("assets/packages/flutter_stockfish_plugin/web/stockfish_data.bin");
+    let data = await fetch(path + "stockfish_data.bin");
     let b = new Uint8Array(await data.arrayBuffer());
     FS.createDataFile("/", nnue_name, b, true, false, true);
     s_read = Module.cwrap("stockfish_stdout_read", "char*", ["bool"], { async: false });
@@ -30,7 +31,7 @@ let _listener_state_cb = (_) => { };
 let _last_state = -2;
 function _stockfish_listener() {
     let state = s_state();
-    if(state >= 0 && _last_state != state){
+    if (state >= 0 && _last_state != state) {
         _listener_state_cb(state);
     }
     _last_state = state;

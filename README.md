@@ -31,6 +31,18 @@ A complete Example can be found at [stockfish_chess_engine](https://github.com/l
 ## Web support
 Web support is currently experimental and currently requires manuly adding assets. It uses a version of stockfish compiled with [emscripten](https://emscripten.org/).
 
+Usage:
+- Install `emscripten` and the the Environment-Variable `EMSDK`
+- Build the CMakeLists.txt in `web/`
+- Copy the following files to `web/stockfish/` in your project: 
+  - flutter_stockfish_plugin.js
+  - flutter_stockfish_plugin.wasm
+  - flutter_stockfish_plugin.worker.js
+  - js_bindings.js
+  - stockfish_data.bin
+
+If a different path should be used: Change the path const's in `js_bindungs.js` and `stockfish_web_bindings.dart`
+
 In order to make multithreading available, the site must run in a secure environment. 
 The following headers must be set for this:
 
@@ -38,9 +50,8 @@ The following headers must be set for this:
 - `Cross-Origin-Opener-Policy: same-origin`
 
 Problems:
-- The current version includes the `.js`, `.wasm` and neuralnetwork data as assets. 
-These files are bundled with every build on every platform, even if they are not needed. 
-This approach wasts about 41MB, if not striped out by hand.
+- The current version does not include the `.js`, `.wasm` and neuralnetwork data as assets. 
+This files will not be bundles automaticly on the web.
 
 
 ## Goal of this fork of stockfish_chess_engine
