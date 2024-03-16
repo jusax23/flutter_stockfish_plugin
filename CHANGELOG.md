@@ -1,3 +1,11 @@
+## 1.1.0
+Added Web Support, Example, Test
+- Added simple test script.
+- Changed example/example.dart to a flutter project
+- Added web support
+- more small fixes
+- Added sse4.2
+
 ## 1.0.4
 Restarting bug fixed.
 - Added the ability to restart stockfish.
