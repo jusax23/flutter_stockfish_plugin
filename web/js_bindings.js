@@ -8,10 +8,12 @@ let ready = false;
 let ready_cb = null;
 
 Module.onRuntimeInitialized = async function () {
-    let data = await fetch(path + "stockfish_data.bin");
-    let b = new Uint8Array(await data.arrayBuffer());
-    FS.createDataFile("/", nnue_name_small, b, true, false, true);
-    FS.createDataFile("/", nnue_name_big, b, true, false, true);
+    let data_small = await fetch(path + "stockfish_data_small.bin");
+    let b_small = new Uint8Array(await data_small.arrayBuffer());
+    let data_big  = await fetch(path + "stockfish_data_big.bin");
+    let b_big = new Uint8Array(await data_big.arrayBuffer());
+    FS.createDataFile("/", nnue_name_small, b_small, true, false, true);
+    FS.createDataFile("/", nnue_name_big, b_big, true, false, true);
     s_read = Module.cwrap("stockfish_stdout_read", "char*", ["bool"], { async: false });
     s_write = Module.cwrap("stockfish_stdin_write", "ssize_t", ["char*"], { async: false });
     s_main = Module.cwrap("stockfish_start_main", "void", [], { async: false });
