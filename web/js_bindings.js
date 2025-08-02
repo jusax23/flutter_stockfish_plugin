@@ -1,4 +1,5 @@
-const nnue_name = "nn-5af11540bbfe.nnue";
+const nnue_name_small = "nn-37f18f62d772.nnue";
+const nnue_name_big = "nn-1c0000000000.nnue";
 const path = "stockfish/";
 
 let s_read, s_write, s_main, s_init, s_state;
@@ -9,7 +10,8 @@ let ready_cb = null;
 Module.onRuntimeInitialized = async function () {
     let data = await fetch(path + "stockfish_data.bin");
     let b = new Uint8Array(await data.arrayBuffer());
-    FS.createDataFile("/", nnue_name, b, true, false, true);
+    FS.createDataFile("/", nnue_name_small, b, true, false, true);
+    FS.createDataFile("/", nnue_name_big, b, true, false, true);
     s_read = Module.cwrap("stockfish_stdout_read", "char*", ["bool"], { async: false });
     s_write = Module.cwrap("stockfish_stdin_write", "ssize_t", ["char*"], { async: false });
     s_main = Module.cwrap("stockfish_start_main", "void", [], { async: false });

@@ -17,8 +17,14 @@ find ./Stockfish/ -type f -exec sed -i \
     -e 's/_get_pgmptr/fake_get_pgmptr/g' \
     {} +
 
-nnue_name=$(grep EvalFileDefaultName Stockfish/src/evaluate.h \
-| grep define \
+nnue_name_small=$(grep EvalFileDefaultName Stockfish/src/evaluate.h \
+| grep "define EvalFileDefaultNameSmall" \
 | sed 's/.*\(nn-[a-z0-9]\{12\}.nnue\).*/\1/')
 
-sed -i "s/set(NNUE_NAME nn-[^)]*.nnue)/set(NNUE_NAME $nnue_name)/" CMakeLists.txt
+nnue_name_big=$(grep EvalFileDefaultName Stockfish/src/evaluate.h \
+| grep "define EvalFileDefaultNameBig" \
+| sed 's/.*\(nn-[a-z0-9]\{12\}.nnue\).*/\1/')
+
+
+sed -i "s/set(NNUE_NAME_SMALL nn-[^)]*.nnue)/set(NNUE_NAME_SMALL $nnue_name_small)/" CMakeLists.txt
+sed -i "s/set(NNUE_NAME_BIG nn-[^)]*.nnue)/set(NNUE_NAME_BIG $nnue_name_big)/" CMakeLists.txt

@@ -2,7 +2,7 @@
 
 A Flutter plugin for the Stockfish Chess engine.
 
-The current version is based on Stockfish 16.
+The current version is based on Stockfish 17.
 
 ## Usage
 
@@ -29,7 +29,7 @@ stockfish.dispose();
 A complete Example can be found at [stockfish_chess_engine](https://github.com/loloof64/StockfishChessEngineFlutter).
 
 ## Web support
-Web support is currently experimental and requires manuly adding assets. It uses a version of stockfish compiled with [emscripten](https://emscripten.org/).
+Web support is currently experimental and requires manually adding assets. It uses a version of stockfish compiled with [emscripten](https://emscripten.org/).
 
 Usage:
 - Install `emscripten` and set the the Environment-Variable `EMSDK`
@@ -39,7 +39,8 @@ Usage:
   - flutter_stockfish_plugin.wasm
   - flutter_stockfish_plugin.worker.js
   - js_bindings.js
-  - stockfish_data.bin
+  - stockfish_data_small.bin
+  - stockfish_data_big.bin
 
 If a different path should be used: Change the path const's in `js_bindungs.js` and `stockfish_web_bindings.dart`
 
@@ -50,8 +51,8 @@ The following headers must be set for this:
 - `Cross-Origin-Opener-Policy: same-origin`
 
 Problems:
-- The current version does not include the `.js`, `.wasm` and neuralnetwork data as assets. 
-This files will not be bundles automaticly on the web.
+- The current version does not include the `.js`, `.wasm` and neural network data as assets. 
+This files will not be bundles automatically on the web.
 
 
 ## Goal of this fork of stockfish_chess_engine

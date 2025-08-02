@@ -52,7 +52,8 @@ else()
 endif()
 
 
-set(NNUE_NAME nn-5af11540bbfe.nnue)
+set(NNUE_NAME_SMALL nn-37f18f62d772.nnue)
+set(NNUE_NAME_BIG nn-1c0000000000.nnue)
 
 add_library(flutter_stockfish_plugin SHARED
   "stockfish.cpp"
@@ -81,8 +82,15 @@ target_include_directories(flutter_stockfish_plugin
 
 
 if (MSVC)
-    file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME} ${CMAKE_BINARY_DIR}/runner/Debug/${NNUE_NAME})
-    file(COPY ${CMAKE_BINARY_DIR}/runner/Debug/${NNUE_NAME} DESTINATION ${CMAKE_BINARY_DIR}/runner/Release)
+    file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME_SMALL} ${CMAKE_BINARY_DIR}/runner/Debug/${NNUE_NAME_SMALL})
+    file(COPY ${CMAKE_BINARY_DIR}/runner/Debug/${NNUE_NAME_SMALL} DESTINATION ${CMAKE_BINARY_DIR}/runner/Release)
 else ()
-    file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME} ${CMAKE_BINARY_DIR}/${NNUE_NAME})
+    file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME_SMALL} ${CMAKE_BINARY_DIR}/${NNUE_NAME_SMALL})
+endif ()
+
+if (MSVC)
+    file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME_BIG} ${CMAKE_BINARY_DIR}/runner/Debug/${NNUE_NAME_BIG})
+    file(COPY ${CMAKE_BINARY_DIR}/runner/Debug/${NNUE_NAME_BIG} DESTINATION ${CMAKE_BINARY_DIR}/runner/Release)
+else ()
+    file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME_BIG} ${CMAKE_BINARY_DIR}/${NNUE_NAME_BIG})
 endif ()

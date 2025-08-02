@@ -7,7 +7,8 @@ project(flutter_stockfish_plugin)
 file(GLOB_RECURSE cppPaths "../src/Stockfish/src/*.cpp")
 set(CMAKE_CXX_STANDARD 17)
 
-set(NNUE_NAME nn-5af11540bbfe.nnue)
+set(NNUE_NAME_SMALL nn-37f18f62d772.nnue)
+set(NNUE_NAME_BIG nn-1c0000000000.nnue)
 
 add_definitions(-DNNUE_EMBEDDING_OFF) # embeding nnue network is currently not supported.
 
@@ -46,7 +47,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 
-file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME} ${CMAKE_BINARY_DIR}/stockfish_data.bin)
+file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME_SMALL} ${CMAKE_BINARY_DIR}/stockfish_data_small.bin)
+file(DOWNLOAD https://tests.stockfishchess.org/api/nn/${NNUE_NAME_BIG} ${CMAKE_BINARY_DIR}/stockfish_data_big.bin)
 
 
 
