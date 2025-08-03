@@ -37,7 +37,6 @@ Usage:
 - Copy the following files to `web/stockfish/` in your project: 
   - flutter_stockfish_plugin.js
   - flutter_stockfish_plugin.wasm
-  - flutter_stockfish_plugin.worker.js
   - js_bindings.js
   - stockfish_data_small.bin
   - stockfish_data_big.bin

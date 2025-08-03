@@ -10,7 +10,7 @@ let ready_cb = null;
 Module.onRuntimeInitialized = async function () {
     let data_small = await fetch(path + "stockfish_data_small.bin");
     let b_small = new Uint8Array(await data_small.arrayBuffer());
-    let data_big  = await fetch(path + "stockfish_data_big.bin");
+    let data_big = await fetch(path + "stockfish_data_big.bin");
     let b_big = new Uint8Array(await data_big.arrayBuffer());
     FS.createDataFile("/", nnue_name_small, b_small, true, false, true);
     FS.createDataFile("/", nnue_name_big, b_big, true, false, true);
