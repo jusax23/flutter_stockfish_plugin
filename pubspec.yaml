@@ -1,6 +1,6 @@
 name: flutter_stockfish_plugin
 description: "A Stockfish Plugin for Flutter. Use Stockfish 17 directly in your flutter app."
-version: 1.1.0
+version: 1.2.0
 homepage: https://github.com/jusax23/flutter_stockfish_plugin
 
 environment:
@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,10 @@
+## 1.2.0
+Stockfish upgrade
+- Upgraded Stockfish to 17.1
+- Cleaned c++ code.
+- Replaced deprecated web libs.
+- Upgraded gradle version.
+
 ## 1.1.0
 Added Web Support, Example, Test
 - Added simple test script.
