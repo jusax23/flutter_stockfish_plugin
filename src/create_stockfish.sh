@@ -15,6 +15,7 @@ find ./Stockfish/ -type f -exec sed -i \
     -e 's/cin.rdbuf/fakein.rdbuf/g' \
     -e 's/cout.rdbuf/fakeout.rdbuf/g' \
     -e 's/_get_pgmptr/fake_get_pgmptr/g' \
+    -e 's/int main/int stockfishMain/g' \
     {} +
 
 nnue_name_small=$(grep EvalFileDefaultName Stockfish/src/evaluate.h \

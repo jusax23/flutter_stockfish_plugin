@@ -23,13 +23,9 @@ void FakeStream::close() {
     }
     mutex_signal.notify_all();
 }
-bool FakeStream::is_closed() {
-    return closed;
-}
+bool FakeStream::is_closed() { return closed; }
 
-std::streambuf* FakeStream::rdbuf() {
-    return nullptr;
-}
+std::streambuf* FakeStream::rdbuf() { return nullptr; }
 
 std::streambuf* FakeStream::rdbuf(std::streambuf* buf) {
     (void)buf;

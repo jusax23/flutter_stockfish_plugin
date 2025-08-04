@@ -5,7 +5,7 @@
 #ifdef _MSC_VER
 
 // Expects a pointer to a char pointer.
-// Overwrites *ptr with a new allocated memory. 
+// Overwrites *ptr with a new allocated memory.
 // Memory managment is left to the user of this function.
 bool fake_get_pgmptr(char** ptr);
 #endif

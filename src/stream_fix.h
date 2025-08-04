@@ -13,13 +13,13 @@
 
 template <typename T>
 inline std::string stringify(const T& input) {
-    std::ostringstream output;  // from   www  .ja va  2s  . com
+    std::ostringstream output;
     output << input;
     return std::string(output.str());
 }
 
 class FakeStream {
-   public:
+  public:
     template <typename T>
     FakeStream& operator<<(const T& val) {
         if (closed)
@@ -28,7 +28,8 @@ class FakeStream {
         string_queue.push(stringify(val));
         mutex_signal.notify_one();
         return *this;
-    };
+    }
+
     template <typename T>
     FakeStream& operator>>(T& val) {
         if (closed)
@@ -57,7 +58,7 @@ class FakeStream {
         val = string_queue.front();
         string_queue.pop();
         return *this;
-    };
+    }
 
     bool try_get_line(std::string&);
 
@@ -68,7 +69,7 @@ class FakeStream {
     std::streambuf* rdbuf();
     std::streambuf* rdbuf(std::streambuf*);
 
-   private:
+  private:
     bool closed = false;
     std::queue<std::string> string_queue;
     std::mutex mutex_guard;
@@ -77,7 +78,7 @@ class FakeStream {
 
 namespace std {
 bool getline(FakeStream& is, std::string& str);
-}  // namespace std
+} // namespace std
 
 extern FakeStream fakeout;
 extern FakeStream fakein;

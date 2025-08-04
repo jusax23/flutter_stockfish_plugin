@@ -18,9 +18,11 @@
 
 const char* QUITOK = "quitok\n";
 
+void runMain();
+
 void runMain() {}
 
-int main(int, char**);
+int stockfishMain(int, char**);
 
 int stockfish_init() {
     fakein.open();
@@ -36,7 +38,7 @@ int stockfish_main() {
     char* empty = (char*)malloc(0);
     *empty = 0;
     char* argv[] = {empty};
-    int exitCode = main(argc, argv);
+    int exitCode = stockfishMain(argc, argv);
     free(empty);
 
     fakeout << QUITOK << "\n";
@@ -54,14 +56,12 @@ int stockfish_main() {
     return exitCode;
 }
 
-void stockfish_start_main(){
+void stockfish_start_main() {
     std::thread t(stockfish_main);
     t.detach();
 }
 
-int stockfish_last_main_state(){
-    return _last_main_state;
-}
+int stockfish_last_main_state() { return _last_main_state; }
 
 ssize_t stockfish_stdin_write(char* data) {
     std::string val(data);

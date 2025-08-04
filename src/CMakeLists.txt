@@ -25,7 +25,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox /DNDEBUG")
 
 else()
-  set(COMMON_FLAGS "-Wall -Wcast-qual -Wno-main -fno-exceptions -std=c++17 -pedantic -Wextra -Wshadow -Wmissing-declarations -flto -DUSE_PTHREADS") 
+  set(COMMON_FLAGS "-Wall -Wcast-qual -Wno-main -fno-exceptions -std=c++17 -pedantic -Wextra -Wshadow -Wmissing-declarations -flto=auto -DUSE_PTHREADS") 
 
   set(SIMD_FLAGS "-mpopcnt -DUSE_POPCNT -mavx -msse -DUSE_SSE2 -msse2 -msse3 -DUSE_SSSE3 -mssse3 -DUSE_SSE41 -msse4.1 -DUSE_SSE42 -msse4.2")
 

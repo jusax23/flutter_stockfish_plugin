@@ -11,7 +11,6 @@
 #ifdef _WIN32
 #ifdef _MSC_VER
 
-
 bool fake_get_pgmptr(char** ptr) {
     wchar_t buffer[MAX_PATH];
     if (GetModuleFileNameW(nullptr, buffer, MAX_PATH) != 0) {
